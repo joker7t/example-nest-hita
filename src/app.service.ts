@@ -32,9 +32,17 @@ export class AppService {
       return 'No user from facebook';
     }
 
+    const { user } = req;
+    this.userService.addUser({
+      firstname: user.user.firstName,
+      lastname: user.user.lastName,
+      email: user.user.email,
+      accessToken: user.accessToken,
+    });
+
     return {
       message: 'User information from facebook',
-      user: req.user,
+      user: user,
     };
   }
 }
