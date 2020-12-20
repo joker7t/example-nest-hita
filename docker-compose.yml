@@ -1,0 +1,30 @@
+version: '2.1'
+
+services:
+  mongodb:
+    image: mongo:4.4
+    mem_limit: 550m
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    healthcheck:
+      test: "mongo --eval 'db.stats().ok'"
+      interval: 20s
+      timeout: 5s
+      retries: 10
+  nest-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    mem_limit: 550m
+    depends_on:
+      - mongodb
+    environment:
+      - GOOGLE_CLIENT_ID=650152698905-3uc1l335e4fe8i1sob8g9pj7o22t005q.apps.googleusercontent.com
+      - GOOGLE_SECRET=wYVcO0Rg4r3A-NBtb2TOFFwd
+      - FACEBOOK_CLIENT_ID=783332772396123
+      - FACEBOOK_SECRET=8b95df76e60e0837614bf0f1cb756d21
+    ports:
+      - 3000:3000
