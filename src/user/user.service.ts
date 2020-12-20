@@ -2,29 +2,29 @@
 import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { User } from './interfaces/User.interface';
+import { UserAttrs } from './interfaces/User.interface';
 import { CreateUserDTO } from './dto/create-user.dto';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel('User') private readonly userModel: Model<User>) {}
+  constructor(@InjectModel('User') private readonly userModel: Model<UserAttrs>) {}
   // fetch all customers
-  async getAllUsers(): Promise<User[]> {
+  async getAllUsers(): Promise<UserAttrs[]> {
     const users = await this.userModel.find().exec();
     return users;
   }
   // Get a single customer
-  async getUser(userId): Promise<User> {
+  async getUser(userId): Promise<UserAttrs> {
     const user = await this.userModel.findById(userId).exec();
     return user;
   }
   // post a single customer
-  async addUser(createUserDTO: CreateUserDTO): Promise<User> {
+  async addUser(createUserDTO: CreateUserDTO): Promise<UserAttrs> {
     const newUser = await new this.userModel(createUserDTO);
     return newUser.save();
   }
   // Edit customer details
-  async updateUser(userId, createUserDTO: CreateUserDTO): Promise<User> {
+  async updateUser(userId, createUserDTO: CreateUserDTO): Promise<UserAttrs> {
     const updatedUser = await this.userModel.findByIdAndUpdate(
       userId,
       createUserDTO,

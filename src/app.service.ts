@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
+import { UserService } from './user/user.service';
 
 @Injectable()
 export class AppService {
+  constructor(private readonly userService: UserService) {}
+
   getHello(): string {
     return 'Hello World!';
   }
@@ -11,9 +14,16 @@ export class AppService {
       return 'No user from google';
     }
 
+    const { user } = req;
+    this.userService.addUser({
+      firstname: user.firstName,
+      lastname: user.lastName,
+      email: user.email,
+      accessToken: user.accessToken,
+    });
     return {
       message: 'User information from google',
-      user: req.user,
+      user: user,
     };
   }
 
