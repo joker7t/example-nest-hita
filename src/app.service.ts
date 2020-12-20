@@ -20,6 +20,7 @@ export class AppService {
       lastname: user.lastName,
       email: user.email,
       accessToken: user.accessToken,
+      from: 'google',
     });
     return {
       message: 'User information from google',
@@ -38,6 +39,7 @@ export class AppService {
       lastname: user.user.lastName,
       email: user.user.email,
       accessToken: user.accessToken,
+      from: 'facebook',
     });
 
     return {

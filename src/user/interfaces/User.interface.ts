@@ -5,4 +5,5 @@ export interface UserAttrs extends Document {
   readonly lastname: string;
   readonly email: string;
   readonly accessToken: string;
+  readonly from: string;
 }
